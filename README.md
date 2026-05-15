@@ -92,6 +92,15 @@ Confirmed failed login attempts were flowing in from external IPs in real time.
 
 Raw security logs contain only IP addresses — no location data. Imported a GeoIP CSV file (54,000+ IP-to-location mappings) as a **Sentinel Watchlist** named `geoip` with `network` as the search key.
 
+
+> <img width="3840" height="1843" alt="image" src="https://github.com/user-attachments/assets/6f1412f0-f109-4177-a2b8-ff87f74f1339" />
+
+---
+
+### Part 6 — Build the Attack Map
+
+Created a new Sentinel Workbook and used the Advanced Editor to paste a custom JSON configuration that renders a live geographic heatmap of all failed login attempts, sized and colored by attack volume.
+
 Used `ipv4_lookup` to join attacker IPs against the watchlist and surface geographic context:
 
 ```kql
@@ -104,15 +113,6 @@ WindowsEvents | where EventID == 4625
 | project FailureCount, AttackerIp = IpAddress, latitude, longitude, city = cityname, country = countryname,
 friendly_location = strcat(cityname, " (", countryname, ")");
 ```
-
-> <img width="3840" height="1843" alt="image" src="https://github.com/user-attachments/assets/6f1412f0-f109-4177-a2b8-ff87f74f1339" />
-
-
----
-
-### Part 6 — Build the Attack Map
-
-Created a new Sentinel Workbook and used the Advanced Editor to paste a custom JSON configuration that renders a live geographic heatmap of all failed login attempts, sized and colored by attack volume.
 
 > <img width="1215" height="687" alt="image" src="https://github.com/user-attachments/assets/ea78d6de-96b3-4b6f-9798-1e4d79179296" />
 
