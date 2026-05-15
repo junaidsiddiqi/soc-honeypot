@@ -66,9 +66,9 @@ Created a **Log Analytics Workspace** (law-soc-lab) to serve as the central log 
 
 Created a **Microsoft Sentinel** instance and connected it to the workspace via the Defender portal. Configured the **Windows Security Events via AMA** data connector and created a **Data Collection Rule (DCR)** to forward security events from the VM to the workspace.
 
-> <img width="1514" height="741" alt="image" src="https://github.com/user-attachments/assets/307a70ed-7ec3-4804-afc0-29da55e5b502" />
-> <img width="1503" height="862" alt="image" src="https://github.com/user-attachments/assets/dcecfc73-276b-454c-b061-6bc76e50f3e6" />
-> <img width="1689" height="868" alt="image" src="https://github.com/user-attachments/assets/fb81d60e-3e95-4379-99cc-b97e796a6fbe" />
+> <img width="1732" height="839" alt="image" src="https://github.com/user-attachments/assets/e4802eb0-8f28-4818-a7ba-f9b971126f0f" />
+> <img width="1732" height="839" alt="image" src="https://github.com/user-attachments/assets/387f78f3-cda5-4fb8-9e9f-f863bc7fefd7" />
+> <img width="1741" height="845" alt="image" src="https://github.com/user-attachments/assets/832fd47d-68d0-46db-b1c5-a6a9b85cea03" />
 
 ---
 
