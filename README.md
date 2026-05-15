@@ -10,7 +10,7 @@ This project demonstrates core SOC analyst skills: cloud infrastructure deployme
 
 ## Architecture
 
-![Architecture Diagram](<img width="851" height="441" alt="image" src="https://github.com/user-attachments/assets/0d138367-b7b4-411b-b341-9d1169047bf0" />)
+> <img width="851" height="441" alt="image" src="https://github.com/user-attachments/assets/0d138367-b7b4-411b-b341-9d1169047bf0" />
 
 | Component | Purpose |
 |---|---|
