@@ -21,10 +21,6 @@ These were real attackers actively targeting my VM — and I lured them in and m
 
 ---
 
-*Credit to [Josh Madakor](https://www.linkedin.com/in/joshmadakor/) for the project guidance and tutorial framework.*
-
----
-
 ## Architecture
 
 > <img width="851" height="441" alt="image" src="https://github.com/user-attachments/assets/0d138367-b7b4-411b-b341-9d1169047bf0" />
