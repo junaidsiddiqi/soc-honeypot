@@ -148,9 +148,9 @@ The Netherlands origin dominated attack volume, consistent with known VPN/proxy 
 
 ## Key Takeaways
 
-- **Exposed RDP ports are discovered within minutes** by automated internet scanners — no manual targeting required
-- **KQL** is a powerful log analysis language directly comparable to SQL and SPL used in Splunk
-- **Log enrichment** (GeoIP) transforms raw IP data into actionable threat intelligence
+- **Opening a single inbound rule to the public internet resulted in thousands of brute force attempts within hours** — demonstrating just how continuously and aggressively internet-facing systems are scanned and targeted
+- **Firewall configuration is the first line of defense** — disabling it immediately multiplied attack surface; in a real environment a single misconfigured rule can expose thousands of endpoints
+- **RDP (port 3389) is one of the most targeted services on the internet** — this lab confirms it firsthand; in production environments RDP should never be exposed directly to the internet
 - **SIEM workbooks** enable SOC analysts to visualize threat patterns and prioritize response
 - **Microsoft Sentinel** (now unified in the Defender portal) consolidates SIEM and XDR capabilities into a single platform
 
