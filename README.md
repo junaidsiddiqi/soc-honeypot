@@ -2,9 +2,26 @@
 
 ## Overview
 
-Deployed an intentionally vulnerable Windows 11 virtual machine on Microsoft Azure as a honeypot to attract real-world brute force attacks. Integrated Microsoft Sentinel (SIEM) to ingest and analyze Windows Security Event logs, enriched raw IP data with geographic information using a custom watchlist, and visualized live global attack traffic on an interactive attack map workbook.
+Within minutes of deployment, my Azure honeypot was under attack.
 
-This project demonstrates core SOC analyst skills: cloud infrastructure deployment, log forwarding, KQL querying, SIEM configuration, and threat visualization.
+I built a Windows 11 VM in Azure, intentionally weakened its defenses by disabling the firewall and opening all inbound traffic, and connected it to Microsoft Sentinel for monitoring. The result: in just 18 hours online, the system was flooded with brute force attempts from real attackers across the globe. Every failed login, every IP address, and every attempt was captured in my logs.
+
+## Goals
+
+The goal of this project was to simulate the workflow of a SOC analyst responding to live threat activity:
+
+- **Deploy and expose** a cloud-based honeypot to attract real-world attack traffic
+- **Forward logs** to a Log Analytics Workspace via Sentinel connectors and the Azure Monitor Agent
+- **Query and investigate** failed login activity using KQL to identify brute force patterns
+- **Enrich attacker IPs** with GeoIP data to add geographic context to the attacks
+- **Visualize threats** through a Sentinel Workbook that maps attacks in real time across a world map
+- **Validate telemetry** locally in Event Viewer to confirm logs matched what Sentinel ingested
+
+These were real attackers actively targeting my VM — and I lured them in and monitored their every move.
+
+---
+
+*Credit to [Josh Madakor](https://www.linkedin.com/in/joshmadakor/) for the project guidance and tutorial framework.*
 
 ---
 
@@ -54,7 +71,7 @@ RDP'd into the VM and disabled Windows Defender Firewall across all profiles (Do
 
 ### Part 2 — Observe Local Logs
 
-After exposing the VM, failed login attempts (Event ID 4625) began appearing in Windows Event Viewer within minutes — confirming automated scanners had discovered the machine.
+After exposing the VM, failed login attempts (Event ID 4625) began appearing in Windows Event Viewer within minutes — confirming automated scanners had already discovered the machine.
 
 > <img width="1198" height="717" alt="image" src="https://github.com/user-attachments/assets/3c313dae-b1b2-4be9-9381-e5c022dc3c47" />
 
@@ -62,13 +79,11 @@ After exposing the VM, failed login attempts (Event ID 4625) began appearing in 
 
 ### Part 3 — Set Up Log Analytics Workspace & Sentinel
 
-Created a **Log Analytics Workspace** (law-soc-lab) to serve as the central log repository.
+Created a **Log Analytics Workspace** and connected it to **Microsoft Sentinel** as the central log repository. Configured the **Windows Security Events via AMA** data connector and deployed a **Data Collection Rule (DCR)** to begin forwarding security events from the honeypot VM.
 
-Created a **Microsoft Sentinel** instance and connected it to the workspace via the Defender portal. Configured the **Windows Security Events via AMA** data connector and created a **Data Collection Rule (DCR)** to forward security events from the VM to the workspace.
-
-> <img width="1732" height="839" alt="image" src="https://github.com/user-attachments/assets/e4802eb0-8f28-4818-a7ba-f9b971126f0f" />
-> <img width="1858" height="904" alt="image" src="https://github.com/user-attachments/assets/766b37ec-5d9c-450f-baff-842497db6158" />
-> <img width="1741" height="845" alt="image" src="https://github.com/user-attachments/assets/832fd47d-68d0-46db-b1c5-a6a9b85cea03" />
+> <img width="3188" height="1651" alt="image" src="https://github.com/user-attachments/assets/95c46ef9-4eb1-47a1-bfc6-100b78cf25a7" />
+> <img width="1503" height="862" alt="image" src="https://github.com/user-attachments/assets/dcecfc73-276b-454c-b061-6bc76e50f3e6" />
+> <img width="1689" height="868" alt="image" src="https://github.com/user-attachments/assets/fb81d60e-3e95-4379-99cc-b97e796a6fbe" />
 
 ---
 
@@ -90,8 +105,7 @@ Confirmed failed login attempts were flowing in from external IPs in real time.
 
 ### Part 5 — Enrich Logs with GeoIP Data
 
-Raw security logs contain only IP addresses — no location data. Imported a GeoIP CSV file (54,000+ IP-to-location mappings) as a **Sentinel Watchlist** named `geoip` with `network` as the search key.
-
+Raw security logs contain only IP addresses — no location data. Imported a GeoIP CSV file (54,000+ IP-to-location mappings) as a **Sentinel Watchlist** named `geoip` with `network` as the search key, which is the column Sentinel indexes to match attacker IPs against the correct geographic row.
 
 > <img width="3840" height="1843" alt="image" src="https://github.com/user-attachments/assets/6f1412f0-f109-4177-a2b8-ff87f74f1339" />
 
@@ -101,7 +115,7 @@ Raw security logs contain only IP addresses — no location data. Imported a Geo
 
 Created a new Sentinel Workbook and used the Advanced Editor to paste a custom JSON configuration that renders a live geographic heatmap of all failed login attempts, sized and colored by attack volume.
 
-Used `ipv4_lookup` to join attacker IPs against the watchlist and surface geographic context:
+The workbook query uses `ipv4_lookup` to join each attacker's IP against the GeoIP watchlist and surface location data:
 
 ```kql
 let GeoIPDB_FULL = _GetWatchlist("geoip");
@@ -120,7 +134,7 @@ friendly_location = strcat(cityname, " (", countryname, ")");
 
 ## Findings
 
-Within hours of deployment, the honeypot was receiving thousands of brute force login attempts from automated scanners across the globe. Top attacking locations included:
+Within 18 hours of deployment, the honeypot was receiving thousands of brute force login attempts from automated scanners across the globe. Top attacking locations included:
 
 | Location | Failed Attempts |
 |---|---|
