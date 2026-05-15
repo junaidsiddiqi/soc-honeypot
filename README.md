@@ -46,9 +46,9 @@ Configured the **Network Security Group (CORP-NET-EAST-2-nsg)** with a custom in
 
 RDP'd into the VM and disabled Windows Defender Firewall across all profiles (Domain, Private, Public) via `wf.msc` to ensure attackers could reach the machine without restriction.
 
-![VM Overview](<img width="3840" height="1824" alt="image" src="https://github.com/user-attachments/assets/3223bf7f-c29e-459d-9778-43106c72a780" />)
-![NSG Rule](<img width="3840" height="1830" alt="image" src="https://github.com/user-attachments/assets/45b571b4-8ad6-49fe-a17b-193d800ea003" />)
-![Firewall Off](<img width="3839" height="2159" alt="image" src="https://github.com/user-attachments/assets/b5f3d40b-faa3-4838-b980-44f2f2a791b7" />)
+> <img width="3840" height="1824" alt="image" src="https://github.com/user-attachments/assets/3223bf7f-c29e-459d-9778-43106c72a780" />
+> <img width="3840" height="1830" alt="image" src="https://github.com/user-attachments/assets/45b571b4-8ad6-49fe-a17b-193d800ea003" />
+> <img width="3839" height="2159" alt="image" src="https://github.com/user-attachments/assets/b5f3d40b-faa3-4838-b980-44f2f2a791b7" />
 
 ---
 
@@ -56,7 +56,7 @@ RDP'd into the VM and disabled Windows Defender Firewall across all profiles (Do
 
 After exposing the VM, failed login attempts (Event ID 4625) began appearing in Windows Event Viewer within minutes — confirming automated scanners had discovered the machine.
 
-![Event Viewer 4625](<img width="1198" height="717" alt="image" src="https://github.com/user-attachments/assets/3c313dae-b1b2-4be9-9381-e5c022dc3c47" />)
+> <img width="1198" height="717" alt="image" src="https://github.com/user-attachments/assets/3c313dae-b1b2-4be9-9381-e5c022dc3c47" />
 
 ---
 
@@ -66,9 +66,9 @@ Created a **Log Analytics Workspace** (law-soc-lab) to serve as the central log 
 
 Created a **Microsoft Sentinel** instance and connected it to the workspace via the Defender portal. Configured the **Windows Security Events via AMA** data connector and created a **Data Collection Rule (DCR)** to forward security events from the VM to the workspace.
 
-![Log Analytics](<img width="3188" height="1651" alt="image" src="https://github.com/user-attachments/assets/95c46ef9-4eb1-47a1-bfc6-100b78cf25a7" />)
-![Sentinel AMA](<img width="1503" height="862" alt="image" src="https://github.com/user-attachments/assets/dcecfc73-276b-454c-b061-6bc76e50f3e6" />)
-![Sentinel DCR](<img width="1689" height="868" alt="image" src="https://github.com/user-attachments/assets/fb81d60e-3e95-4379-99cc-b97e796a6fbe" />)
+> <img width="3188" height="1651" alt="image" src="https://github.com/user-attachments/assets/95c46ef9-4eb1-47a1-bfc6-100b78cf25a7" />
+> <img width="1503" height="862" alt="image" src="https://github.com/user-attachments/assets/dcecfc73-276b-454c-b061-6bc76e50f3e6" />
+> <img width="1689" height="868" alt="image" src="https://github.com/user-attachments/assets/fb81d60e-3e95-4379-99cc-b97e796a6fbe" />
 
 ---
 
@@ -84,7 +84,7 @@ SecurityEvent
 
 Confirmed failed login attempts were flowing in from external IPs in real time.
 
-![KQL Query Results](<img width="3188" height="1651" alt="image" src="https://github.com/user-attachments/assets/292c608c-6428-4ab4-b8a5-13d601c175c0" />)
+> <img width="3188" height="1651" alt="image" src="https://github.com/user-attachments/assets/292c608c-6428-4ab4-b8a5-13d601c175c0" />
 
 ---
 
@@ -105,7 +105,7 @@ WindowsEvents | where EventID == 4625
 friendly_location = strcat(cityname, " (", countryname, ")");
 ```
 
-![GeoIP Watchlist](<img width="3840" height="1843" alt="image" src="https://github.com/user-attachments/assets/6f1412f0-f109-4177-a2b8-ff87f74f1339" />)
+> <img width="3840" height="1843" alt="image" src="https://github.com/user-attachments/assets/6f1412f0-f109-4177-a2b8-ff87f74f1339" />
 
 
 ---
@@ -114,7 +114,7 @@ friendly_location = strcat(cityname, " (", countryname, ")");
 
 Created a new Sentinel Workbook and used the Advanced Editor to paste a custom JSON configuration that renders a live geographic heatmap of all failed login attempts, sized and colored by attack volume.
 
-![Attack Map](<img width="1215" height="687" alt="image" src="https://github.com/user-attachments/assets/ea78d6de-96b3-4b6f-9798-1e4d79179296" />)
+> <img width="1215" height="687" alt="image" src="https://github.com/user-attachments/assets/ea78d6de-96b3-4b6f-9798-1e4d79179296" />
 
 ---
 
